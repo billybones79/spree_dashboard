@@ -8,8 +8,10 @@ module Spree
         end_date = Time.now
 
         completed_orders = Spree::Order
-          .eager_load(bill_address: [:state, :country])
-          .where(payment_state: 'paid').where(completed_at: begin_date..end_date)
+                               .eager_load(bill_address: [:state, :country])
+                               .where(payment_state: 'paid')
+                               .where(completed_at: begin_date..end_date)
+                               .order(:completed_at)
 
         @order_line_bar_data = [
           {
