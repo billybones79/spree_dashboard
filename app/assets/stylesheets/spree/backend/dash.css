@@ -1,0 +1,12 @@
+
+.panel-heading .ventes-stats h3 {
+    display: inline-block;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.panel-heading .cash-money {
+    display: inline-block;
+    padding-top: 5px;
+    font-size: 14px;
+}

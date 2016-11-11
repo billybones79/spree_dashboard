@@ -16,6 +16,7 @@ Introduction goes here.
 2. Install the gem using Bundler:
   ```ruby
   bundle install
+  bundle exec rails g spree_dashboard:install
   ```
 
 3. Copy & run migrations

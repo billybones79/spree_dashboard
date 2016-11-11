@@ -1,12 +1,114 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.css" />
+<div class="col-md-2">
+  <div style="height:1000px">
+    <div class="col-md-12">
+      <h3>Résumé</h3>
+    </div>
+    <div class="col-md-5">
+      <% year_growth = calculate_growth Time.now.beginning_of_year, Time.now, 1.year.ago.beginning_of_year, 1.year.ago %>
+      <% if year_growth > 0 %>
+          <span class="glyphicon glyphicon-triangle-bottom"></span>
+      <% elsif year_growth < 0 %>
+          <span class="glyphicon glyphicon-triangle-top"></span>
+      <% else %>
+          <span class="glyphicon glyphicon-question-sign"></span>
+      <% end %>
+      <%= number_to_percentage year_growth.abs, precision: 2 %>
+    </div>
+    <div class="col-md-2">
+      |
+    </div>
+    <div class="col-md-5">
+      <% month_growth = calculate_growth Time.now.beginning_of_month, Time.now, 1.month.ago.beginning_of_month, 1.month.ago %>
+      <% if month_growth > 0 %>
+          <span class="glyphicon glyphicon-triangle-bottom"></span>
+      <% elsif month_growth < 0 %>
+          <span class="glyphicon glyphicon-triangle-top"></span>
+      <% else %>
+          <span class="glyphicon glyphicon-question-sign"></span>
+      <% end %>
+      <%= number_to_percentage month_growth.abs, precision: 2 %>
+    </div>
+    <div class="col-md-12">
+      <h2>Total</h2>
+      <h3><%= Spree::Money.new(total_sales_period Time.at(0)) %></h3>
+    </div>
+    <div class="col-md-12">
+      <h4>Cette semaine</h4>
+      <h5>Total: <%= Spree::Money.new(total_sales_period Time.now.beginning_of_week) %></h5>
+      <h5>Vente Moyenne: <%= Spree::Money.new(average_sales_period Time.now.beginning_of_week) %></h5>
+    </div>
+    <div class="col-md-12">
+      <h4>Ce mois</h4>
+      <h5>Total: <%= Spree::Money.new(total_sales_period Time.now.beginning_of_month) %></h5>
+      <h5>Vente Moyenne: <%= Spree::Money.new(average_sales_period Time.now.beginning_of_month) %></h5>
+    </div>
+    <div class="col-md-12">
+      <h4>Trois derniers mois</h4>
+      <h5>Total: <%= Spree::Money.new(total_sales_period 3.month.ago.beginning_of_day) %></h5>
+      <h5>Vente Moyenne: <%= Spree::Money.new(average_sales_period 3.month.ago.beginning_of_day) %></h5>
+    </div>
+    <div class="col-md-12">
+      <h4>Cette année</h4>
+      <h5>Total: <%= Spree::Money.new(total_sales_period) %></h5>
+      <h5>Vente Moyenne: <%= Spree::Money.new(average_sales_period) %></h5>
+    </div>
+    <div class="col-md-12">
+      <h4>Vente moyenne</h4>
+      <h5><%= Spree::Money.new(average_sales_period Time.at(0)) %></h5>
+      <h4>Moyenne de vente par mois</h4>
+      <h5><%= number_with_precision average_num_period, precision: 2 %></h5>
+      <h4>Moyenne de vente par jour</h4>
+      <h5><%= number_with_precision average_num_period('doy'), precision: 2 %></h5>
+    </div>
+  </div>
+</div>
 
+<div class="col-md-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading ventes-stats">
+      <h3 class="panel-title">Ventes aujourd'hui</h3>
+      <span class="cash-money"><%= Spree::Money.new(total_sales_period Time.now.beginning_of_day) %></span>
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading ventes-stats">
+      <h3 class="panel-title">Ventes année</h3>
+      <span class="cash-money"><%= Spree::Money.new(total_sales_period) %></span>
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading ventes-stats">
+      <h3 class="panel-title">Ventes hier</h3>
+      <span class="cash-money"><%= Spree::Money.new(total_sales_period 1.day.ago.beginning_of_day, Time.now.beginning_of_day) %></span>
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading ventes-stats">
+      <h3 class="panel-title">Ventes derniêre semaine</h3>
+      <span class="cash-money">
+        <%= Spree::Money.new(total_sales_period 1.week.ago.beginning_of_week, Time.now.beginning_of_week)%></span>
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading ventes-stats">
+      <h3 class="panel-title">Ventes dernier mois</h3>
+      <span class="cash-money"><%= Spree::Money.new(total_sales_period 1.month.ago.beginning_of_month, Time.now.beginning_of_month) %></span>
+    </div>
+  </div>
+</div>
 
 <div class="col-md-4">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Ventes par région des 3 derniers mois</h3>
+      <h3 class="panel-title">Ventes par région</h3>
     </div>
     <div class="panel-body">
       <div id="chart" style="height:400px">
@@ -15,10 +117,10 @@
     </div>
   </div>
 </div>
-<div class="col-md-8">
+<div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Ventes des 3 derniers mois</h3>
+      <h3 class="panel-title">Ventes</h3>
     </div>
     <div class="panel-body">
       <div id="line_bar" style="height:400px">
@@ -27,82 +129,182 @@
     </div>
   </div>
 </div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Meilleurs Catégories</h3>
+    </div>
+    <div class="panel-body">
+      <% top_taxonomies.each do |category, best| %>
+          <h3><%= category %></h3>
+          <ul class="list-group">
+            <% best.each do |b| %>
+                <il class="list-group-item">
+                  <span class="badge"><%= b[:value] %></span>
+                  <%= b[:name] %>
+                </il>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Nouveaux utilisateurs des 3 derniers mois</h3>
+      <h3 class="panel-title">Nouveaux utilisateurs</h3>
     </div>
     <div class="panel-body">
-      <div id="user-chart">
-        <svg></svg>
+      <div id="user-chart" style="height:200px">
+        <svg style="width: 100%"></svg>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Nouveaux courriels</h3>
+    </div>
+    <div class="panel-body">
+      <div id="email-chart" style="height:200px">
+        <svg style="width: 100%"></svg>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  var months = [
+    '<%= t('months.january') %>',
+    '<%= t('months.february') %>',
+    '<%= t('months.march') %>',
+    '<%= t('months.april') %>',
+    '<%= t('months.may') %>',
+    '<%= t('months.june') %>',
+    '<%= t('months.july') %>',
+    '<%= t('months.august') %>',
+    '<%= t('months.september') %>',
+    '<%= t('months.october') %>',
+    '<%= t('months.november') %>',
+    '<%= t('months.december') %>'
+  ];
   //Pie
-  nv.addGraph(function() {
+  nv.addGraph(function () {
     var region_data = <%= @pie_data.to_json.html_safe %>;
     var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true)
-      .showLegend(false)
-      .showTooltipPercent(true)
-    .valueFormat(function(d) { return d3.format(',f')(d) + '$' })
-    ;
+            .x(function (d) {
+              return d.label
+            })
+            .y(function (d) {
+              return d.value
+            })
+            .showLabels(true)
+            .showLegend(false)
+            .showTooltipPercent(true)
+            .valueFormat(function (d) {
+              return d3.format(',f')(d) + '$'
+            })
+        ;
 
     d3.select("#chart svg")
-      .datum(region_data)
-      .transition().duration(1200)
-      .call(chart);
+        .datum(region_data)
+        .transition().duration(1200)
+        .call(chart);
     nv.utils.windowResize(chart.update);
 
     return chart;
   });
 
   // Line
-nv.addGraph(function() {
-  var chart;
-  var data = <%= @order_line_bar_data.to_json.html_safe %>;
-  data.map(function(series) {
-            series.values = series.values.map(function(d) { return {x: d[0], y: d[1] } });
-            return series;
-        });
-  chart = nv.models.linePlusBarChart()
-    .margin({top: 50, right: 80, bottom: 30, left: 80})
-    .color(d3.scale.category10().range());
-  chart.xAxis.tickFormat(function(d) {
-    return d3.time.format('%x')(new Date(d))
-  }).showMaxMin(false);
-  chart.y2Axis.tickFormat(function(d) { return d3.format(',f')(d) + '$' });
-  chart.bars.forceY([0]).padData(false);
-  chart.x2Axis.tickFormat(function(d) {
-    return d3.time.format('%x')(new Date(d))
-  }).showMaxMin(false);
-  d3.select('#line_bar svg')
-    .datum(data)
-    .transition().duration(500).call(chart);
-  nv.utils.windowResize(chart.update);
-  return chart;
-});
-
-    //User bar
-  nv.addGraph(function() {
-    var user_data = <%= @user_data.to_json.html_safe %>;
-    user_data.map(function(series) {
-      series.values = series.values.map(function(d) { return {x: d[0], y: d[1] } });
+  nv.addGraph(function () {
+    var chart;
+    var data = <%= @order_line_bar_data.to_json.html_safe %>;
+    data.map(function (series) {
+      series.values = series.values.map(function (d) {
+        return {x: d[0], y: d[1]}
+      });
       return series;
     });
-    var chart = nv.models.historicalBar()
-        ;
+    chart = nv.models.linePlusBarChart()
+        .margin({top: 50, right: 80, bottom: 30, left: 80})
+        .color(d3.scale.category10().range())
+        .focusEnable(false);
+    chart.xAxis.tickFormat(function (d) {
+      return months[d - 1]
+    });
+    chart.y2Axis.tickFormat(function (d) {
+      return d3.format(',f')(d) + '$'
+    });
+    chart.x2Axis.tickFormat(function (d) {
+      return months[d - 1]
+    });
+    chart.bars.forceY([0]).padData(false);
+    d3.select('#line_bar svg')
+        .datum(data)
+        .transition().duration(500).call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+  });
+
+  //User bar
+  nv.addGraph(function () {
+    var user_data = <%= user_data %>;
+    user_data.map(function (series) {
+      series.values = series.values.map(function (d) {
+        return {x: d[0], y: d[1]}
+      });
+      return series;
+    });
+    var chart = nv.models.historicalBarChart();
+    chart.xAxis
+      .showMaxMin(true)
+      .tickFormat(function(d) {
+        return d3.time.format('%d/%m/%y')(new Date(d))
+      });
+    chart.tooltip.keyFormatter(function(d) {
+        return d3.time.format('%d/%m/%y')(new Date(d))
+      });
 
     d3.select("#user-chart svg")
         .datum(user_data)
         .transition()
         .call(chart);
     nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  //Email bar
+var email_data = []
+  nv.addGraph(function () {
+    email_data = <%= email_data %>;
+    console.log(email_data);
+    email_data.map(function (series) {
+      series.values = series.values.map(function (d) {
+        return {x: d[0], y: d[1]}
+      });
+      return series;
+    });
+    var chart = nv.models.historicalBarChart();
+    chart.xAxis
+      .showMaxMin(true)
+      .tickFormat(function(d) {
+        return d3.time.format('%d/%m/%y')(new Date(d))
+      });
+    chart.tooltip.keyFormatter(function(d) {
+        return d3.time.format('%d/%m/%y')(new Date(d))
+      });
+
+    d3.select("#email-chart svg")
+        .datum(email_data)
+        .transition()
+        .call(chart);
+    nv.utils.windowResize(function() {
+      chart.update;
+    });
 
     return chart;
   });
