@@ -113,7 +113,7 @@ module Spree
         .minimum(:completed_at)
 
       emails.each do |e|
-        day = e[1].beginning_of_day.to_i
+        day = e[1].beginning_of_day.to_i * 1000
         email_quantity[day] += 1
       end
 

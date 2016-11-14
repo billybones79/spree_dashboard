@@ -1,6 +1,7 @@
 module Spree
   module Admin
     class DashboardsController < BaseController
+
       helper Spree::StatsHelper
 
       def index

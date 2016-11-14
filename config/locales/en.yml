@@ -2,6 +2,27 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  dashboard: Dashboard
+  index:
+    summary: Summary
+    sales: Sales
+    total: Total
+    this_week: This week
+    this_month: This month
+    last_3_month: Last three months
+    this_year: This year
+    avg_sale: Average sale
+    avg_sale_month: Average sales per month
+    avg_sale_day: Average sales per day
+    sales_today: Sales today
+    sales_year: Sales year
+    sales_yesterday: Sales yesterday
+    sales_last_week: Sales last week
+    sales_last_month: Sales last month
+    sales_by_region: Sales by region
+    best_categories: Best categories
+    new_users: New users
+    new_emails: New emails
   months:
     january: January
     february: February
