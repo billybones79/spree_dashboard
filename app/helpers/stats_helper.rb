@@ -82,7 +82,9 @@ module Spree
       user_quantity = {}
       user_quantity.default = 0
 
-      users = Spree::User.where('created_at >= ?', begin_date)
+      users = Spree::User.eager_load(:spree_roles)
+        .where("(spree_roles.name != ? OR spree_roles.id IS NULL)", 'admin')
+        .where('created_at >= ?', begin_date)
 
       users.each do |user|
         day = user.created_at.beginning_of_day.to_i * 1000
