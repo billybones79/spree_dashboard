@@ -1,0 +1,125 @@
+#stats-container{
+  background-color:#f7f7f7;
+  overflow: auto;
+}
+.stats-left-panel {
+  border: solid 1px #eaeaea;
+}
+.sale-swatch {
+  margin-bottom: 25px;
+
+  h3 {
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 0;
+  }
+
+  .cash-money {
+    font-size: 25px;
+    color: #1f77b4;
+    white-space: nowrap;
+  }
+  .cash-money::first-letter{
+    font-size: 20px;
+    padding-bottom: 5px;
+    padding-right: 3px;
+    color: #888888;
+  }
+}
+
+#stats-container {
+  .summary {
+    white-space: nowrap;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #fff;
+    padding: 20px;
+    background-color: #1f77b4;
+    text-align: left;
+
+    p {
+      padding: 0;
+      display: table-cell;
+      vertical-align: middle;
+      padding-top: 7px;
+      padding-right: 5px;
+      float: left;
+    }
+    .percentage_label {
+      font-size: 12px;
+      opacity: 0.6;
+      white-space: normal;
+    }
+    .glyphicon {
+      font-size: 20px;
+    }
+    .percentage {
+      font-size: 30px;
+    }
+
+    h3 {
+      font-size: 21px;
+      opacity: 0.8;
+      margin-bottom:0;
+    }
+
+  }
+  .total {
+    text-align: left;
+    background-color: #162e40;
+    color: #fff;
+    padding: 20px;
+    h2 {
+      font-size: 21px;
+      opacity: 0.6;
+      margin-bottom:0;
+    }
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  .left-stats{
+    h4 {
+      padding: 7px 20px;
+      border-top: solid 1px #eaeaea;
+      border-bottom: solid 1px #eaeaea;
+      background-color: #fff;
+    }
+    p {
+      padding: 0 20px;
+    }
+  }
+  .categories {
+    h4 {
+      color: #1f77b4;
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .number {
+      color: #1f77b4;
+      font-weight: bold;
+      font-size: 17px;
+      display:inline-block;
+      margin:0 4px;
+      float:right;
+    } 
+    .list-group-item {
+      border: none;
+    }
+  }
+}
+.stats {
+  .panel, .panel-heading{
+    background-color: white;
+    border:none;
+  }
+  .panel-heading {
+    color: #000;
+    font-size: 20px;
+    text-align:center;
+    color: black;
+    font-weight: 400;
+    border-bottom: none;
+  }
+}

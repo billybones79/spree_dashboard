@@ -7,20 +7,22 @@ fr:
     summary: Résumé
     sales: Ventes
     total: Total
+    month_growth: Croissance ce mois ci
+    year_growth: Croissance cette année
     this_week: Cette semaine
-    this_month: Ce mois
+    this_month: Ce mois ci
     last_3_month: Trois derniers mois
     this_year: Cette année
     avg_sale: Vente moyenne
     avg_sale_month: Moyenne de ventes par mois
     avg_sale_day: Moyenne de ventes par jour
-    sales_today: Ventes aujourd'hui
-    sales_year: Ventes année
-    sales_yesterday: Ventes hier
-    sales_last_week: Ventes de la semaine passée
-    sales_last_month: Ventes du mois passé
+    sales_today: Aujourd'hui
+    sales_year: Cette année
+    sales_yesterday: Hier
+    sales_last_week: Semaine dernière
+    sales_last_month: Mois dernier
     sales_by_region: Ventes par région
-    best_categories: Meilleurs catégories
+    best_categories: Meilleures catégories
     new_users: Nouveaux utilisateurs
     new_emails: Nouveaux courriels
   months:

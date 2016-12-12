@@ -7,6 +7,8 @@ en:
     summary: Summary
     sales: Sales
     total: Total
+    month_growth: Growth this month
+    year_growth: Growth this year
     this_week: This week
     this_month: This month
     last_3_month: Last three months
@@ -15,7 +17,7 @@ en:
     avg_sale_month: Average sales per month
     avg_sale_day: Average sales per day
     sales_today: Sales today
-    sales_year: Sales year
+    sales_year: Sales this year
     sales_yesterday: Sales yesterday
     sales_last_week: Sales last week
     sales_last_month: Sales last month
