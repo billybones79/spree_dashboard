@@ -85,9 +85,14 @@
       border-top: solid 1px #eaeaea;
       border-bottom: solid 1px #eaeaea;
       background-color: #fff;
+      margin: 0;
+      cursor: pointer;
     }
-    p {
-      padding: 0 20px;
+    .values {
+      padding: 15px;
+    }
+    .amount {
+      font-size: 18px;
     }
   }
   .categories {
@@ -121,5 +126,11 @@
     color: black;
     font-weight: 400;
     border-bottom: none;
+  }
+}
+
+#chart {
+  .nv-pieLabels .nv-label text{
+    font-size: 10px;
   }
 }

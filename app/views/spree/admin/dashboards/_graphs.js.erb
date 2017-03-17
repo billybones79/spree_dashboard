@@ -1,0 +1,158 @@
+var months = [
+  '<%= t('months.january') %>',
+  '<%= t('months.february') %>',
+  '<%= t('months.march') %>',
+  '<%= t('months.april') %>',
+  '<%= t('months.may') %>',
+  '<%= t('months.june') %>',
+  '<%= t('months.july') %>',
+  '<%= t('months.august') %>',
+  '<%= t('months.september') %>',
+  '<%= t('months.october') %>',
+  '<%= t('months.november') %>',
+  '<%= t('months.december') %>'
+];
+
+// Side stats
+$('#stats-container .values').hide();
+$('#stats-container h4').click(function(e) {
+  if ($(e.target).next('.values').hasClass('open')) {
+    return
+  }
+  var last_toggle = $('#stats-container .values.open');
+  last_toggle.slideToggle();
+  last_toggle.removeClass('open');
+  if (last_toggle != $(this)) {
+    $(this).next('.values').slideToggle();
+    $(this).next('.values').addClass('open');
+  }
+});
+
+//Pie
+nv.addGraph(function () {
+  var region_data = <%= @pie_data.to_json.html_safe %>;
+  var chart = nv.models.pieChart()
+          .x(function (d) {
+            return d.label
+          })
+          .y(function (d) {
+            return d.value
+          })
+          .showLabels(true)
+          .labelType('key')
+          .labelsOutside('value')
+          .showLegend(true)
+          .showTooltipPercent(true)
+          .valueFormat(function (d) {
+            return d3.format(',f')(d) + '$'
+          })
+      ;
+
+  d3.select("#chart svg")
+      .datum(region_data)
+      .transition().duration(1200)
+      .call(chart);
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+// Line
+nv.addGraph(function () {
+  var chart;
+  var data = <%= @order_line_bar_data.to_json.html_safe %>;
+  data.map(function (series) {
+    series.values = series.values.map(function (d) {
+      return {x: d[0], y: d[1]}
+    });
+    return series;
+  });
+  var vals = data[0]['values'];
+  var tickValues = [];
+  if (vals) {
+    for (var i=0; i<vals.length; i=i+2) {
+      tickValues.push(vals[i].x);
+    }
+  }
+  chart = nv.models.linePlusBarChart()
+      .margin({top: 50, right: 80, bottom: 30, left: 80})
+      .color(d3.scale.category10().range())
+      .focusEnable(false);
+  if (tickValues) {
+    chart.xAxis.tickValues(tickValues);
+  }
+  chart.xAxis.tickFormat(function (d) {
+    return d3.time.format('%b %y')(new Date(d));
+  });
+  chart.y2Axis.tickFormat(function (d) {
+    return d3.format(',f')(d) + '$'
+  });
+  chart.x2Axis.tickFormat(function (d) {
+    return d3.time.format('%b %y')(new Date(d));
+  });
+  chart.bars.forceY([0]).padData(false);
+  d3.select('#line_bar svg')
+      .datum(data)
+      .transition().duration(500).call(chart);
+  nv.utils.windowResize(chart.update);
+  return chart;
+});
+
+//User bar
+nv.addGraph(function () {
+  var user_data=<%= user_data %>;
+  user_data.map(function (series) {
+    series.values = series.values.map(function (d) {
+      return {x: d[0], y: d[1]}
+    });
+    return series;
+  });
+  var chart = nv.models.historicalBarChart();
+  chart.xAxis
+    .showMaxMin(true)
+    .tickFormat(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.tooltip.keyFormatter(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.useInteractiveGuideline(true);
+
+  d3.select("#user-chart svg")
+      .datum(user_data)
+      .transition()
+      .call(chart);
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+//Email bar
+var email_data = []
+nv.addGraph(function () {
+  email_data = <%= email_data %>;
+  email_data.map(function (series) {
+    series.values = series.values.map(function (d) {
+      return {x: d[0], y: d[1]}
+    });
+    return series;
+  });
+  var chart = nv.models.historicalBarChart();
+  chart.xAxis
+    .showMaxMin(true)
+    .tickFormat(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.tooltip.keyFormatter(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.useInteractiveGuideline(true);
+
+  d3.select("#email-chart svg")
+      .datum(email_data)
+      .transition()
+      .call(chart);
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});

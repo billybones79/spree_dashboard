@@ -36,7 +36,7 @@ module Spree
 
     end
 
-    def top_taxonomies(begin_date = Time.now.beginning_of_year, end_date = Time.now, top = 3)
+    def top_taxonomies(begin_date = Time.now.years_ago(1), end_date = Time.now, top = 3)
       top_tax = {}
       taxonomies = Spree::Taxonomy.all
 
@@ -85,6 +85,7 @@ module Spree
       users = Spree::User.eager_load(:spree_roles)
         .where("(spree_roles.name != ? OR spree_roles.id IS NULL)", 'admin')
         .where('created_at >= ?', begin_date)
+        .order('created_at')
 
       users.each do |user|
         day = user.created_at.beginning_of_day.to_i * 1000
@@ -97,7 +98,7 @@ module Spree
       return user_data.to_json.html_safe
     end
 
-    def email_data(begin_date = Time.now.beginning_of_year)
+    def email_data(begin_date = Time.now.years_ago(1))
       email_data = [
         {
           :key => 'email',
@@ -119,7 +120,7 @@ module Spree
         email_quantity[day] += 1
       end
 
-      email_quantity.each do |key, value|
+      email_quantity.sort.map do |key, value|
         email_data[0][:values] << [key, value]
       end
       return email_data.to_json.html_safe
