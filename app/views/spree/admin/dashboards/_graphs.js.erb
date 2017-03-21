@@ -1,17 +1,4 @@
-var months = [
-  '<%= t('months.january') %>',
-  '<%= t('months.february') %>',
-  '<%= t('months.march') %>',
-  '<%= t('months.april') %>',
-  '<%= t('months.may') %>',
-  '<%= t('months.june') %>',
-  '<%= t('months.july') %>',
-  '<%= t('months.august') %>',
-  '<%= t('months.september') %>',
-  '<%= t('months.october') %>',
-  '<%= t('months.november') %>',
-  '<%= t('months.december') %>'
-];
+var months = <%= t("date.month_names").to_json.html_safe %>;
 
 // Side stats
 $('#stats-container .values').hide();

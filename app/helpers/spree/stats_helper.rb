@@ -120,7 +120,7 @@ module Spree
         email_quantity[day] += 1
       end
 
-      email_quantity.sort.map do |key, value|
+      email_quantity.sort.each do |key, value|
         email_data[0][:values] << [key, value]
       end
       return email_data.to_json.html_safe

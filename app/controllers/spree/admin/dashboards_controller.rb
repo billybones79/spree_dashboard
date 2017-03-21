@@ -89,7 +89,6 @@ module Spree
         [:state, :country].each do |type|
           region_data[type].each { |_, v| @pie_data << {:label => v[:name], :value => v[:revenue]} }
         end
-        return @pie_data
       end
     end
   end
