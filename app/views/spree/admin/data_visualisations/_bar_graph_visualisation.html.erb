@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><%= bar_graph_name %></h3>
+  </div>
+  <div class="panel-body">
+    <%= content_tag "div", div_options do %>
+        <svg></svg>
+
+    <% end %>
+  </div>
+</div>
+
+<script>
+    nv.addGraph(function () {
+        var user_data=<%= bar_graph_data %>;
+        user_data.map(function (series) {
+            series.values = series.values.map(function (d) {
+                return {x: d[0], y: d[1]}
+            });
+            return series;
+        });
+        var chart = nv.models.historicalBarChart();
+        chart.xAxis
+                .showMaxMin(true)
+                .tickFormat(function(d) {
+                    return d3.time.format('%d/%m/%y')(new Date(d))
+                });
+        chart.tooltip.keyFormatter(function(d) {
+            return d3.time.format('%d/%m/%y')(new Date(d))
+        });
+        chart.useInteractiveGuideline(true);
+
+        d3.select("#<%= div_options[:id]%> svg")
+                .datum(user_data)
+                .transition()
+                .call(chart);
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+
+</script>

@@ -1,0 +1,50 @@
+var months = <%= t("date.month_names").to_json.html_safe %>;
+
+// Side stats
+$('#stats-container .values').hide();
+$('#stats-container h4').click(function(e) {
+  if ($(e.target).next('.values').hasClass('open')) {
+    return
+  }
+  var last_toggle = $('#stats-container .values.open');
+  last_toggle.slideToggle();
+  last_toggle.removeClass('open');
+  if (last_toggle != $(this)) {
+    $(this).next('.values').slideToggle();
+    $(this).next('.values').addClass('open');
+  }
+});
+
+
+
+//User bar
+
+//Email bar
+var email_data = []
+nv.addGraph(function () {
+  email_data = <%= email_data %>;
+  email_data.map(function (series) {
+    series.values = series.values.map(function (d) {
+      return {x: d[0], y: d[1]}
+    });
+    return series;
+  });
+  var chart = nv.models.historicalBarChart();
+  chart.xAxis
+    .showMaxMin(true)
+    .tickFormat(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.tooltip.keyFormatter(function(d) {
+      return d3.time.format('%d/%m/%y')(new Date(d))
+    });
+  chart.useInteractiveGuideline(true);
+
+  d3.select("#email-chart svg")
+      .datum(email_data)
+      .transition()
+      .call(chart);
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
