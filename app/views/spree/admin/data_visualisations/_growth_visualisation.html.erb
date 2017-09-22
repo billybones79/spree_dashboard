@@ -1,0 +1,22 @@
+<h3><%= t("index.summary") %></h3>
+<span class="percentage_label"><%= t("index.year_growth") %></span>
+<br/>
+<% if year_growth > 0 %>
+    <p><span class="glyphicon glyphicon-triangle-bottom"></span></p>
+<% elsif year_growth < 0 %>
+    <p><span class="glyphicon glyphicon-triangle-top"></span></p>
+<% else %>
+    <p><span class="glyphicon glyphicon-question-sign"></span></p>
+<% end %>
+<span class="percentage"><%= number_to_percentage year_growth.abs, precision: 0 %></span>
+<br/>
+<span class="percentage_label"><%= t("index.month_growth") %></span></p>
+<br/>
+<% if month_growth > 0 %>
+    <p><span class="glyphicon glyphicon-triangle-bottom"></span></p>
+<% elsif month_growth < 0 %>
+    <p><span class="glyphicon glyphicon-triangle-top"></span></p>
+<% else %>
+    <p><span class="glyphicon glyphicon-question-sign"></span></p>
+<% end %>
+<span class="percentage"><%= number_to_percentage month_growth.abs, precision: 0 %></span>

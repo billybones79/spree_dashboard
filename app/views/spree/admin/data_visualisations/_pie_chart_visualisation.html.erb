@@ -1,0 +1,42 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3><%= pie_name %></h3>
+  </div>
+  <div class="panel-body">
+    <%= content_tag "div", div_options do %>
+        <svg></svg>
+
+  <% end %>
+  </div>
+</div>
+
+<script>
+//Pie
+nv.addGraph(function () {
+        var region_data = <%= pie_data.to_json.html_safe %>;
+        var chart = nv.models.pieChart()
+        .x(function (d) {
+            return d.label
+        })
+        .y(function (d) {
+            return d.value
+        })
+        .showLabels(true)
+        .labelType('key')
+        .labelsOutside('value')
+        .showLegend(true)
+        .showTooltipPercent(true)
+        .valueFormat(function (d) {
+            return d3.format(',f')(d) + '$'
+        });
+
+        d3.select("#<%= div_options[:id]%> svg")
+        .datum(region_data)
+        .transition().duration(1200)
+        .call(chart);
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+});
+</script>

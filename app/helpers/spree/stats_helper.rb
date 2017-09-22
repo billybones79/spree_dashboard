@@ -15,6 +15,7 @@ module Spree
     end
 
     def average_num_period(date_extract = 'month', begin_date = Time.now.beginning_of_year, end_date = Time.now)
+      #FIXME database agnosticism is cool
       subquery = Spree::Order.select("EXTRACT(#{date_extract} FROM completed_at) AS ex, COUNT(*) as the_count")
         .where(payment_state: 'paid')
         .where(completed_at: begin_date..end_date)
@@ -23,18 +24,7 @@ module Spree
 
     end
 
-    def calculate_growth(new_begin, new_end, old_begin, old_end)
-      new = total_sales_period new_begin, new_end
-      old = total_sales_period old_begin, old_end
-      growth = (old - new) / old * 100
 
-      if growth.abs == BigDecimal.new('Infinity')
-        growth = 0
-      end
-
-      return growth
-
-    end
 
     def top_taxonomies(begin_date = Time.now.years_ago(1), end_date = Time.now, top = 3)
       top_tax = {}
@@ -71,32 +61,7 @@ module Spree
         return top_tax
     end
 
-    def user_data(begin_date = Time.now.beginning_of_year)
 
-      user_data = [
-        {
-          :key => 'user',
-          :values => []
-        }
-      ]
-      user_quantity = {}
-      user_quantity.default = 0
-
-      users = Spree::User.eager_load(:spree_roles)
-        .where("(spree_roles.name != ? OR spree_roles.id IS NULL)", 'admin')
-        .where('created_at >= ?', begin_date)
-        .order('created_at')
-
-      users.each do |user|
-        day = user.created_at.beginning_of_day.to_i * 1000
-        user_quantity[day] += 1
-      end
-
-      user_quantity.each do |key, value|
-        user_data[0][:values] << [key, value]
-      end
-      return user_data.to_json.html_safe
-    end
 
     def email_data(begin_date = Time.now.years_ago(1))
       email_data = [

@@ -2,34 +2,10 @@
   <div class="col-md-2 stats-left-panel">
     <div class="row">
       <div class="col-md-12 col-xs-6 summary">
-        <h3><%= t("index.summary") %></h3>
-        <span class="percentage_label"><%= t("index.year_growth") %></span>
-        <br/>
-        <% year_growth = calculate_growth Time.now.beginning_of_year, Time.now, 1.year.ago.beginning_of_year, 1.year.ago %>
-        <% if year_growth > 0 %>
-            <p><span class="glyphicon glyphicon-triangle-bottom"></span></p>
-        <% elsif year_growth < 0 %>
-            <p><span class="glyphicon glyphicon-triangle-top"></span></p>
-        <% else %>
-            <p><span class="glyphicon glyphicon-question-sign"></span></p>
-        <% end %>
-        <span class="percentage"><%= number_to_percentage year_growth.abs, precision: 0 %></span>
-        <br/>
-        <span class="percentage_label"><%= t("index.month_growth") %></span></p>
-        <br/>
-        <% month_growth = calculate_growth Time.now.beginning_of_month, Time.now, 1.month.ago.beginning_of_month, 1.month.ago %>
-        <% if month_growth > 0 %>
-            <p><span class="glyphicon glyphicon-triangle-bottom"></span></p>
-        <% elsif month_growth < 0 %>
-            <p><span class="glyphicon glyphicon-triangle-top"></span></p>
-        <% else %>
-            <p><span class="glyphicon glyphicon-question-sign"></span></p>
-        <% end %>
-        <span class="percentage"><%= number_to_percentage month_growth.abs, precision: 0 %></span>
+        <%= Spree::DataVisualisations::GrowthVisualisation.new().render_visualisation %>
       </div>
       <div class="col-md-12 col-sm-6 total">
-        <h2><%= t("index.total") %></h2>
-        <h3><%= Spree::Money.new(total_sales_period Time.at(0)) %></h3>
+        <%= Spree::DataVisualisations::TotalVisualisation.new().render_visualisation %>
       </div>
     </div>
     <div class="row left-stats">
@@ -114,67 +90,23 @@
 
   <div class="stats">
     <div class="col-md-4 region-chart">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3><%= t('index.sales_by_region') %></h3>
-        </div>
-        <div class="panel-body">
-          <div id="chart" style="height:550px">
-            <svg></svg>
-          </div>
-        </div>
-      </div>
+      <%= Spree::DataVisualisations::PieChartVisualisation.new().render_visualisation %>
     </div>
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3><%= t('index.sales') %></h3>
-        </div>
-        <div class="panel-body">
-          <div id="line_bar" style="height:550px">
-            <svg></svg>
-          </div>
-        </div>
-      </div>
+      <%= Spree::DataVisualisations::LineBarGraphVisualisation.new().render_visualisation %>
+
     </div>
 
-    <% top_taxo = top_taxonomies %>
-    <% unless top_taxo.empty? %>
+
       <div class="col-md-4">
-        <div class="panel panel-default categories">
-          <div class="panel-heading">
-            <h3><%= t('index.best_categories') %></h3>
-          </div>
-          <div class="panel-body">
-            <% top_taxo.each do |category, best| %>
-              <h4><%= category %></h4>
-              <ul class="list-group">
-                <% best.each do |b| %>
-                  <li class="list-group-item">
-                    <span class="number"><%= b[:value] %></span>
-                    <%= b[:name] %>
-                  </li>
-                <% end %>
-              </ul>
-            <% end %>
-          </div>
-        </div>
+        <%= Spree::DataVisualisations::TopTaxonomiesVisualisation.new().render_visualisation %>
       </div>
-    <% end %>
 
     <div class="col-md-6 clear">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3><%= t('index.new_users') %></h3>
-        </div>
-        <div class="panel-body">
-          <div id="user-chart" style="height:200px">
-            <svg style="width: 100%"></svg>
-          </div>
-        </div>
-      </div>
+      <%= Spree::DataVisualisations::UserDataVisualisation.new().render_visualisation %>
+
     </div>
-    <div class="col-md-6">
+    <!--div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3><%= t('index.new_emails') %></h3>
@@ -185,7 +117,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div-->
   </div>
 </div>
 <script type="text/javascript" charset="utf-8">
