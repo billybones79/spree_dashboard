@@ -12,13 +12,16 @@ module Spree
       def bar_graph_name
         "bar_graph"
       end
+      def style
+        "height: 550px;"
+      end
 
 
 
 
       def prepare(options = { })
 
-        options = {from: 1.year.ago, to: Time.now(), div_options:{id: div_id, style: "height: 200px"}}.merge(options)
+        options = {from: 1.year.ago, to: Time.now(), div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
         locals[:bar_graph_name] = bar_graph_name
         locals[:bar_graph_data] = data(options[:from], options[:to])
