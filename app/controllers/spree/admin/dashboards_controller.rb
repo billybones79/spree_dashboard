@@ -13,7 +13,7 @@ module Spree
       end
 
       protected
-      
+
     end
   end
 end
