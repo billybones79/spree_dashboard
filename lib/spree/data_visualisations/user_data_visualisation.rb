@@ -14,7 +14,7 @@ module Spree
       end
 
 
-      def data(begin_date, end_date)
+      def data(filters={})
 
         user_data = [
             {
@@ -27,7 +27,8 @@ module Spree
 
         users = Spree::User.eager_load(:spree_roles)
                     .where("(spree_roles.name != ? OR spree_roles.id IS NULL)", 'admin')
-                    .where('created_at >= ?', begin_date)
+                    .where('created_at >= ?', filters[:from])
+                    .where('created_at < ?', filters[:to])
                     .order('created_at')
 
         users.each do |user|

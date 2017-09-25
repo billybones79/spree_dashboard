@@ -10,14 +10,14 @@ module Spree
 
       def prepare(options = { })
 
-        options = {from: 1.year.ago, to: Time.now()}.merge(options)
+        options = {filters: {from: 1.year.ago, to: Time.now()}}.merge(options)
         locals = {}
-        locals[:top_taxo] = top_taxonomies options[:from], options[:to]
+        locals[:top_taxo] = top_taxonomies options[:filters]
         locals
 
       end
 
-      def top_taxonomies(begin_date = Time.now.years_ago(1), end_date = Time.now, top = 3)
+      def top_taxonomies(filters,  top = 3)
         top_tax = {}
         taxonomies = Spree::Taxonomy.all
 
@@ -26,7 +26,7 @@ module Spree
           top_taxons = Spree::Order.
               joins(:line_items => [{:product => :taxons}]).
               where(payment_state: 'paid').
-              where(completed_at: begin_date..end_date).
+              where(completed_at: filters[:begin_date]..filters[:end_date]).
               where(:spree_taxons => {
                         id: Spree::Taxon
                                 .select(:id)
