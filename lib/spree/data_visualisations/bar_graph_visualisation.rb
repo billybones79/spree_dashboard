@@ -19,15 +19,17 @@ module Spree
 
 
 
-      def prepare(options = { })
+      def prepare(options = {})
 
-        options = {filters: {from: 1.year.ago, to: Time.now()}, div_options:{id: div_id, style: style}}.merge(options)
+
+        options = {filters: {from: 1.year.ago.iso8601, to: Date.today}, div_options:{id: div_id, style: style}}.merge(options)
+
         locals = {}
         locals[:bar_graph_name] = bar_graph_name
         locals[:bar_graph_data] = data(options[:filters])
-
         locals[:div_options] = options[:div_options]
-
+        locals[:from] = options[:filters][:from]
+        locals[:to] = options[:filters][:to]
         locals
 
       end

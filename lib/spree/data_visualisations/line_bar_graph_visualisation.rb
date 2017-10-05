@@ -10,7 +10,7 @@ module Spree
 
       def prepare(options = { })
 
-        options = {filters: {from: 1.year.ago.beginning_of_month, to: Time.now()}, div_options:{id: "line_bar_graph", style: "height: 550px"}}.merge(options)
+        options = {filters: {from: 1.year.ago, to: Time.now()}, div_options:{id: "line_bar_graph", style: "height: 550px"}}.deep_merge(options)
         locals = {}
         locals[:line_bar_graph_name] = I18n.t('index.sales')
         locals[:line_bar_graph_data] = get_orders_data(options[:filters])
@@ -24,7 +24,7 @@ module Spree
         completed_orders = Spree::Order
                                .eager_load(bill_address: [:state, :country])
                                .where(payment_state: 'paid')
-                               .where(completed_at: filters[:begin_date]..filters[:end_date])
+                               .where(completed_at: filters[:from]..filters[:to])
                                .order(:completed_at)
 
 

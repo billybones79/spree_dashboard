@@ -5,9 +5,6 @@ module Spree
         "top_taxonomies_visualisation"
       end
 
-
-
-
       def prepare(options = { })
 
         options = {filters: {from: 1.year.ago, to: Time.now()}}.merge(options)
@@ -51,7 +48,6 @@ module Spree
         end
          top_tax
       end
-
     end
   end
 end
