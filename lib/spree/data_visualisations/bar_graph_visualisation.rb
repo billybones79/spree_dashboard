@@ -20,10 +20,16 @@ module Spree
 
 
       def prepare(options = {})
+        today = Date.today
+        from = Date.new(Date.today.year, 6, 30)
+        to = from + 1.day
 
+        if today < from
+          from = from - 1.year
+          to = to - 1.year
+        end
 
-        options = {filters: {from: 1.year.ago.iso8601, to: Date.today}, div_options:{id: div_id, style: style}}.merge(options)
-
+        options = {filters: {from: from, to: to}, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
         locals[:bar_graph_name] = bar_graph_name
         locals[:bar_graph_data] = data(options[:filters])

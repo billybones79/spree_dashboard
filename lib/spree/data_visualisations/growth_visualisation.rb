@@ -18,7 +18,6 @@ module Spree
       end
 
       def calculate_growth(filters = {})
-        puts filters[:new_from]
         new =  Spree::Order.where(completed_at: filters[:new_from]..filters[:new_to]).where(payment_state: 'paid').sum(:total)
         old =  Spree::Order.where(completed_at: filters[:old_from]..filters[:old_to]).where(payment_state: 'paid').sum(:total)
         growth = (old - new) / old * 100
