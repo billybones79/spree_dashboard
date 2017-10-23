@@ -1,19 +1,17 @@
 module Spree
   module DataVisualisations
-    class BarGraphVisualisation < DataVisualisation
-      
+    class HorizontalBarGraphVisualisation < DataVisualisation
       def view_name
-        "bar_graph_visualisation"
+        "horizontal_bar_graph_visualisation"
       end
 
       def div_id
         "bar_graph"
       end
 
-      def bar_graph_name
+      def name
         "bar_graph"
       end
-
       def style
         "height: 550px;"
       end
@@ -30,12 +28,13 @@ module Spree
 
         options = {filters: {from: from, to: to}, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
-        locals[:bar_graph_name] = bar_graph_name
-        locals[:bar_graph_data] = data(options[:filters])
+        locals[:name] = bar_graph_name
+        locals[:data] = data(options[:filters])
         locals[:div_options] = options[:div_options]
         locals[:from] = options[:filters][:from]
         locals[:to] = options[:filters][:to]
         locals
+
       end
 
 

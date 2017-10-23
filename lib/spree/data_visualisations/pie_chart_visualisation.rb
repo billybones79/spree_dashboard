@@ -5,9 +5,6 @@ module Spree
         "pie_chart_visualisation"
       end
 
-
-
-
       def prepare(options = { })
         today = Date.today
         from = Date.new(Date.today.year, 6, 30)
