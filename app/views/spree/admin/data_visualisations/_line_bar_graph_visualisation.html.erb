@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3><%= line_bar_graph_name %></h3>
+    <h3><%= name %></h3>
   </div>
   <div class="panel-body">
     <%= content_tag "div", div_options do %>
@@ -16,7 +16,7 @@
     // Line
     nv.addGraph(function () {
         var chart;
-        var data = <%= line_bar_graph_data.to_json.html_safe %>;
+        var data = <%= data %>;
         data.map(function (series) {
             series.values = series.values.map(function (d) {
                 return {x: d[0], y: d[1]}

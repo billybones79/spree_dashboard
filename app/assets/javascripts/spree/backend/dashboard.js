@@ -53,6 +53,7 @@ var Chart = function(data, div_id) {
       return chart;
     });
   }
+
   this.pieChart = function (margins) {
     var that = this;
     nv.addGraph(function() {
