@@ -12,7 +12,7 @@
 </div>
 
 <script>
-  var pie_data = "<%= pie_data %>";
+  var pie_data = <%= pie_data %>;
   var id = "<%= div_options[:id] %>"
   chart = new Chart(pie_data, id).pieChart();
 </script>

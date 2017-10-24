@@ -10,7 +10,7 @@
   </div>
   <!-- insert_after 'script' -->
   <script>
-      var data = "<%= bar_graph_data %>";
+      var data = <%= bar_graph_data %>;
       var id = "<%= div_options[:id] %>"
       chart = new Chart(data, id).multiBarChart();
   </script>
