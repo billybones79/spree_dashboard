@@ -1,6 +1,6 @@
 module Spree
 	module DataVisualisations
-		class PieChartVisualisaton < DataVisualisation
+		class PieChartVisualisation < DataVisualisation
 			def view_name
 		        "pie_chart_visualisation"
 		    end
