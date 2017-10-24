@@ -1,18 +1,17 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3><%= pie_name %></h3>
+    <h3>adasdas</h3>
   </div>
   <div class="panel-body">
     <%= content_tag "div", div_options do %>
         <svg></svg>
-
   <% end %>
   </div>
 </div>
 
 <script>
-  var pie_data = <%= pie_data %>;
+  var data = <%= data %>;
   var id = "<%= div_options[:id] %>"
-  chart = new Chart(pie_data, id).pieChart();
+  chart = new Chart(data, id).pieChart();
 </script>

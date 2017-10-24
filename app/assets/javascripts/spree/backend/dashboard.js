@@ -55,7 +55,6 @@ var Chart = function(data, div_id) {
   }
   this.pieChart = function (margins) {
     var that = this;
-    alert(that.div_id)
     nv.addGraph(function() {
       var chart = nv.models.pieChart();
       chart.x(function(d) { return d.label });
