@@ -6,14 +6,8 @@ module Spree
       end
 
       def prepare(options = { })
-        today = Date.today
-        from = Date.new(Date.today.year, 6, 30)
-        to = from + 1.day
-
-        if today < from
-          from = from - 1.year
-          to = to - 1.year
-        end
+        from = get_fiscal_year "from"
+        to = get_fiscal_year "to"
 
         options = {filters:{ from: from, to: to}, div_options:{id: "pie_chart", style: "height: 550px"}}.deep_merge(options)
         locals = {}

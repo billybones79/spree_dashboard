@@ -1,6 +1,26 @@
 module Spree
   module DataVisualisations
     class DataVisualisation
+
+      # Permet d'obtenir les dates de l'année financière
+      def get_fiscal_year(reference)
+        today = Date.today
+        
+        from = Date.new(Date.today.year, 6, 30)
+        to = from + 1.day
+
+        if today < from
+          from = from - 1.year
+          to = to - 1.year
+        end
+
+        if reference == 'from'
+          return from
+        elsif reference == 'to'
+          return to
+        end
+      end
+
       
       def view_name
         "data_visualisation"
