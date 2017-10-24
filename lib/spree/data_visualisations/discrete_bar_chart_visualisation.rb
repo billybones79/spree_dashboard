@@ -1,13 +1,13 @@
 module Spree
   module DataVisualisations
-    class BarGraphVisualisation < DataVisualisation
+    class DiscreteBarChartVisualisation < DataVisualisation
 
         def view_name
-            "bar_graph_visualisation"
+            "discrete_bar_chart_visualisation"
         end
 
         def name
-          "Bar Graph"
+          "Discrete Bar Graph"
         end
 
         def style
@@ -15,7 +15,7 @@ module Spree
         end
 
         def div_id
-          "the_bar_graph_id"
+          "the_discrete_bar_graph_id"
         end
 
       def prepare(options = {})

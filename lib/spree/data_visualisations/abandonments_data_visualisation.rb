@@ -3,11 +3,19 @@ module Spree
     class AbandonmentsDataVisualisation < DataVisualisation
 
       def view_name
-        "abandonments_visualisation"
+        "abandonments_data_visualisation"
       end
 
-      def graph_name
-        "Abandons"
+      def name
+        "abandonments_data_visualisation"
+      end
+
+      def div_id
+        'abandonments_data_visualisation'
+      end
+
+      def style
+        "height: 550px;"
       end
 
       def prepare(options = {})
@@ -16,20 +24,17 @@ module Spree
 
         options = {filters: {from: from, to: to}, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
-        locals[:stats_name] = graph_name
+        locals[:name] = name
         locals[:data] = data(options[:filters])
         locals[:div_options] = options[:div_options]
         locals[:from] = options[:filters][:from]
         locals[:to] = options[:filters][:to]
         locals
-
       end
-
 
       def data(filters={})
 
       end
-
     end
   end
 end

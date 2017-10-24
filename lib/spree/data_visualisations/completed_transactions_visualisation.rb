@@ -3,11 +3,19 @@ module Spree
     class CompletedTransactionsVisualisation < DataVisualisation
 
       def view_name
-        "completed_transactions_visualisation"
+        "transactions_visualisation"
       end
 
-      def graph_name
-        "Transactions complétées"
+      def name
+        "completed_transactions"
+      end
+
+      def div_id
+        'completed_transactions'
+      end
+
+      def style
+        "height: 550px;"
       end
 
       def prepare(options = {})
@@ -16,20 +24,17 @@ module Spree
 
         options = {filters: {from: from, to: to}, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
-        locals[:graph_name] = graph_name
-        locals[:graph_data] = data(options[:filters])
+        locals[:name] = name
+        locals[:data] = data(options[:filters])
         locals[:div_options] = options[:div_options]
         locals[:from] = options[:filters][:from]
         locals[:to] = options[:filters][:to]
         locals
-
       end
-
 
       def data(filters={})
 
       end
-
     end
   end
 end
