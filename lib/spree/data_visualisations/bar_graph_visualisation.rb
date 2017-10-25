@@ -2,8 +2,8 @@ module Spree
   module DataVisualisations
     class BarGraphVisualisation < DataVisualisation
 
-        def view_name
-            "bar_graph_visualisation"
+        def view_name 
+          "bar_graph_visualisation"
         end
 
         def name

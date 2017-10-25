@@ -23,7 +23,7 @@ var Chart = function(data, div_id) {
     });
   }
 
-  this.historicalBarGraph = function () {
+  this.historicalBarGraph = function (margins) {
     var that = this
     nv.addGraph(function () {
         var user_data = that.data;
@@ -34,6 +34,9 @@ var Chart = function(data, div_id) {
             return series;
         });
         var chart = nv.models.historicalBarChart();
+        if (typeof margins !== 'undefined') {
+          chart.margin({top: margins[0], right: margins[1], bottom: margins[2], left: margins[3]})
+        }
         chart.xAxis.showMaxMin(true).tickFormat(function(d) {
             return d3.time.format('%d/%m/%y')(new Date(d));
         });
@@ -97,7 +100,7 @@ var Chart = function(data, div_id) {
     });
   }
 
-  this.lineBarGraph = function () {
+  this.lineBarGraph = function (margins) {
     var that = this
     nv.addGraph(function () {
         var chart;
@@ -132,6 +135,9 @@ var Chart = function(data, div_id) {
             return d3.time.format('%b %y')(new Date(d));
         });
         chart.bars.forceY([0]).padData(false);
+        if (typeof margins !== 'undefined') {
+          chart.margin({top: margins[0], right: margins[1], bottom: margins[2], left: margins[3]})
+        }
         d3.select('#' + that.div_id + ' svg')
                 .datum(data)
                 .transition().duration(500).call(chart);

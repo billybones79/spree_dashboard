@@ -3,7 +3,7 @@ module Spree
     class HistoricalBarGraph < DataVisualisation
 
         def view_name
-            "historical_bar_graph_visualisation"
+          "historical_bar_graph_visualisation"
         end
 
         def name

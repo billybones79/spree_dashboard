@@ -3,7 +3,7 @@ module Spree
     class HoritonzalBarGraphVisualisation < DataVisualisation
 
         def view_name
-            "horizontal_bar_graph_visualisation"
+          "horizontal_bar_graph_visualisation"
         end
 
         def name
