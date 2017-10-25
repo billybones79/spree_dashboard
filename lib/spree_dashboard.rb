@@ -12,4 +12,5 @@ require 'spree/data_visualisations/total_visualisation.rb'
 require 'spree/data_visualisations/completed_transactions_visualisation.rb'
 require 'spree/data_visualisations/abandonments_data_visualisation.rb'
 require 'spree/data_visualisations/growth_visualisation.rb'
+require 'spree/data_visualisations/historical_bar_graph_visualisation.rb'
 

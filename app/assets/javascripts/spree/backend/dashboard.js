@@ -22,6 +22,32 @@ var Chart = function(data, div_id) {
       return chart;
     });
   }
+
+  this.historicalBarGraph = function () {
+    var that = this
+    nv.addGraph(function () {
+        var user_data = that.data;
+        user_data.map(function (series) {
+            series.values = series.values.map(function (d) {
+                return {x: d[0], y: d[1]};
+            });
+            return series;
+        });
+        var chart = nv.models.historicalBarChart();
+        chart.xAxis.showMaxMin(true).tickFormat(function(d) {
+            return d3.time.format('%d/%m/%y')(new Date(d));
+        });
+        chart.tooltip.keyFormatter(function(d) {
+            return d3.time.format('%d/%m/%y')(new Date(d));
+        });
+        chart.useInteractiveGuideline(true);
+        d3.select("#" + that.div_id + " svg").datum(user_data).transition().call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
+  }
+
+
   this.multiBarHorizontalChart = function (margins) {
     var that = this;
     nv.addGraph(function() {
@@ -41,6 +67,7 @@ var Chart = function(data, div_id) {
       return chart;
     });
   }
+
   this.multiBarChart = function (margins) {
     var that = this;
     nv.addGraph(function() {
@@ -67,6 +94,49 @@ var Chart = function(data, div_id) {
       }
       d3.select("#"+ that.div_id +" svg").datum(that.data).transition().duration(350).call(chart);
       return chart;
+    });
+  }
+
+  this.lineBarGraph = function () {
+    var that = this
+    nv.addGraph(function () {
+        var chart;
+        var data = that.data;
+        data.map(function (series) {
+            series.values = series.values.map(function (d) {
+                return {x: d[0], y: d[1]}
+            });
+            return series;
+        });
+        var vals = data[0]['values'];
+        var tickValues = [];
+        if (vals) {
+            for (var i=0; i<vals.length; i=i+2) {
+                tickValues.push(vals[i].x);
+            }
+        }
+        chart = nv.models.linePlusBarChart()
+                .margin({top: 50, right: 80, bottom: 30, left: 80})
+                .color(d3.scale.category10().range())
+                .focusEnable(false);
+        if (tickValues) {
+            chart.xAxis.tickValues(tickValues);
+        }
+        chart.xAxis.tickFormat(function (d) {
+            return d3.time.format('%b %y')(new Date(d));
+        });
+        chart.y2Axis.tickFormat(function (d) {
+            return d3.format(',f')(d) + '$'
+        });
+        chart.x2Axis.tickFormat(function (d) {
+            return d3.time.format('%b %y')(new Date(d));
+        });
+        chart.bars.forceY([0]).padData(false);
+        d3.select('#' + that.div_id + ' svg')
+                .datum(data)
+                .transition().duration(500).call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
     });
   }
 }
