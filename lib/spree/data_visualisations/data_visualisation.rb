@@ -15,16 +15,14 @@ module Spree
         end
 
         return {from: from, to: to}
-        
-      end
-
-      
-      def view_name
-        "data_visualisation"
       end
 
       def view_path
         "spree/admin/data_visualisations"
+      end
+
+      def view_name
+        "discrete_bar_chart_visualisation"
       end
 
       def prepare options = {}

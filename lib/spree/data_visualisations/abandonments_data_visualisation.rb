@@ -2,10 +2,6 @@ module Spree
   module DataVisualisations
     class AbandonmentsDataVisualisation < DataVisualisation
 
-      def view_name
-        "abandonments_data_visualisation"
-      end
-
       def name
         "abandonments_data_visualisation"
       end

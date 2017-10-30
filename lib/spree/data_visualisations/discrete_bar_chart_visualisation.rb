@@ -2,10 +2,6 @@ module Spree
   module DataVisualisations
     class DiscreteBarChartVisualisation < DataVisualisation
 
-        def view_name
-            "discrete_bar_chart_visualisation"
-        end
-
         def name
           "Discrete Bar Graph"
         end
