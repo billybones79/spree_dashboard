@@ -18,11 +18,7 @@ module Spree
 		    end
 
 		    def prepare(options = { })
-		    	# Obtenir la date de début et de fin
-			    from = get_fiscal_year "from"
-			    to = get_fiscal_year "to"
-
-			    options = {filters: {from: from, to: to}, div_options:{id: div_id, style: style}}.merge(options)
+			    options = {filters: get_fiscal_year, div_options:{id: div_id, style: style}}.merge(options)
 		        locals = {}
 		        locals[:name] = name
 		        locals[:data] = data(options[:filters])

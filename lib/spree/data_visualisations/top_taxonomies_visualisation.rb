@@ -6,10 +6,7 @@ module Spree
       end
 
       def prepare(options = { })
-        from = get_fiscal_year "from"
-        to = get_fiscal_year "to"
-        
-        options = {filters: {from: from, to: to}}.merge(options)
+        options = {filters: get_fiscal_year}.merge(options)
         locals = {}
         locals[:top_taxo] = top_taxonomies options[:filters]
         locals
