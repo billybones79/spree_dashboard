@@ -1,24 +1,21 @@
 module Spree
   module DataVisualisations
-    class LineBarGraphVisualisation < DataVisualisation
+    class DiscreteBarChartVisualisation < DataVisualisation
 
-      def view_name
-        "line_bar_graph_visualisation"
-      end
+        def name
+          "Discrete Bar Graph"
+        end
 
-      def name
-        "line_bar_graph_visualisation"
-      end
+        def style
+          "height: 550px;"
+        end
 
-      def style
-        "height: 550px;"
-      end
+        def div_id
+          "the_discrete_bar_graph_id"
+        end
 
-      def div_id
-        "line_bar_graph_visualisation"
-      end
+      def prepare(options = {})
 
-      def prepare(options = { })
         options = {filters: get_fiscal_year, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
         locals[:name] = name
@@ -29,8 +26,9 @@ module Spree
         locals
       end
 
+
       def data(filters={})
-        
+
       end
 
     end

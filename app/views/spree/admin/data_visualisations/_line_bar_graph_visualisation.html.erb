@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3><%= line_bar_graph_name %></h3>
+    <h3><%= name %></h3>
   </div>
   <div class="panel-body">
     <%= content_tag "div", div_options do %>
@@ -11,48 +11,7 @@
 
 
 <script type="text/javascript" charset="utf-8">
-
-
-    // Line
-    nv.addGraph(function () {
-        var chart;
-        var data = <%= line_bar_graph_data.to_json.html_safe %>;
-        data.map(function (series) {
-            series.values = series.values.map(function (d) {
-                return {x: d[0], y: d[1]}
-            });
-            return series;
-        });
-        var vals = data[0]['values'];
-        var tickValues = [];
-        if (vals) {
-            for (var i=0; i<vals.length; i=i+2) {
-                tickValues.push(vals[i].x);
-            }
-        }
-        chart = nv.models.linePlusBarChart()
-                .margin({top: 50, right: 80, bottom: 30, left: 80})
-                .color(d3.scale.category10().range())
-                .focusEnable(false);
-        if (tickValues) {
-            chart.xAxis.tickValues(tickValues);
-        }
-        chart.xAxis.tickFormat(function (d) {
-            return d3.time.format('%b %y')(new Date(d));
-        });
-        chart.y2Axis.tickFormat(function (d) {
-            return d3.format(',f')(d) + '$'
-        });
-        chart.x2Axis.tickFormat(function (d) {
-            return d3.time.format('%b %y')(new Date(d));
-        });
-        chart.bars.forceY([0]).padData(false);
-        d3.select('#<%= div_options[:id]%> svg')
-                .datum(data)
-                .transition().duration(500).call(chart);
-        nv.utils.windowResize(chart.update);
-        return chart;
-    });
-
-
+    var data = <%= data %>;
+    var id = "<%= div_options[:id] %>"
+    chart = new Chart(data, id).lineBarGraph();
 </script>

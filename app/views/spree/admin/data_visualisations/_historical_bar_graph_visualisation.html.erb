@@ -1,4 +1,3 @@
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3><%= name %></h3>
@@ -6,12 +5,12 @@
   <div class="panel-body">
     <%= content_tag "div", div_options do %>
         <svg></svg>
-  <% end %>
+    <% end %>
   </div>
 </div>
 
 <script>
-  var data = <%= data %>;
-  var id = "<%= div_options[:id] %>"
-  chart = new Chart(data, id).pieChart();
+    var data = <%= data %>;
+      var id = "<%= div_options[:id] %>"
+      chart = new Chart(data, id).historicalBarGraph();
 </script>

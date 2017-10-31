@@ -1,4 +1,4 @@
- <div class="panel panel-default">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h3><%= name %></h3>
     </div>
@@ -11,6 +11,6 @@
   <!-- insert_after 'script' -->
   <script>
       var data = <%= data %>;
-      var id = "<%= div_options[:id] %>";
-      chart = new Chart(data, id).multiBarChart();
+      var id = "<%= div_options[:id] %>"
+      chart = new Chart(data, id).multiBarHorizontalChart([25,25,25,150]);
   </script>

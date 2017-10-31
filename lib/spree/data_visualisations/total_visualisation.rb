@@ -8,7 +8,7 @@ module Spree
 
       def prepare(options = { })
 
-        options = {from: 1.year.ago, to: Time.now()}.merge options
+        options = get_fiscal_year.merge options
         locals = {}
         locals[:total] =  Spree::Money.new(Spree::Order.where(completed_at: options[:from]..options[:to]).where(payment_state: 'paid').sum(:total))
         locals[:avg_sale] =  Spree::Money.new(Spree::Order.where(completed_at: options[:from]..options[:to]).where(payment_state: 'paid').average(:total))

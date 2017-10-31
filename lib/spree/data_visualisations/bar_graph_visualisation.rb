@@ -1,35 +1,33 @@
 module Spree
   module DataVisualisations
     class BarGraphVisualisation < DataVisualisation
-      def view_name
-        "bar_graph_visualisation"
-      end
 
-      def div_id
-        "bar_graph"
-      end
+        def view_name 
+          "bar_graph_visualisation"
+        end
 
-      def bar_graph_name
-        "bar_graph"
-      end
-      def style
-        "height: 550px;"
-      end
+        def name
+          "Bar Graph"
+        end
 
+        def style
+          "height: 550px;"
+        end
 
+        def div_id
+          "the_bar_graph_id"
+        end
 
+      def prepare(options = {})
 
-      def prepare(options = { })
-
-        options = {filters: {from: 1.year.ago, to: Time.now()}, div_options:{id: div_id, style: style}}.merge(options)
+        options = {filters: get_fiscal_year, div_options:{id: div_id, style: style}}.merge(options)
         locals = {}
-        locals[:bar_graph_name] = bar_graph_name
-        locals[:bar_graph_data] = data(options[:filters])
-
+        locals[:name] = name
+        locals[:data] = data(options[:filters])
         locals[:div_options] = options[:div_options]
-
+        locals[:from] = options[:filters][:from]
+        locals[:to] = options[:filters][:to]
         locals
-
       end
 
 

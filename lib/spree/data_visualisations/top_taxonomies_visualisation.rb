@@ -5,12 +5,8 @@ module Spree
         "top_taxonomies_visualisation"
       end
 
-
-
-
       def prepare(options = { })
-
-        options = {filters: {from: 1.year.ago, to: Time.now()}}.merge(options)
+        options = {filters: get_fiscal_year}.merge(options)
         locals = {}
         locals[:top_taxo] = top_taxonomies options[:filters]
         locals
@@ -51,7 +47,6 @@ module Spree
         end
          top_tax
       end
-
     end
   end
 end
