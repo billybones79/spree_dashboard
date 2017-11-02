@@ -2,12 +2,16 @@ module Spree
   module DataVisualisations
     class DataVisualisation
 
-      # Permet d'obtenir les dates de l'année financière
-      def get_fiscal_year()
+      #base scope for filters
+      def base_order_scope filters = {}
+        Spree::Order.joins(:line_items).where(created_at: filters[:from]..filters[:to])
+      end
+
+      def get_fiscal_year
         today = Date.today
         
         from = Date.new(Date.today.year, 6, 30)
-        to = from + 1.day
+        to = from + 1.year
 
         if today < from
           from = from - 1.year
@@ -24,10 +28,22 @@ module Spree
       def view_name
         "discrete_bar_chart_visualisation"
       end
-
-      def prepare options = {}
-
+      def defaults
+        {filters: get_fiscal_year, div_options:{id: div_id, style: style}}
       end
+
+      def prepare(options = {})
+
+        options = defaults.deep_merge(options)
+        locals = {}
+        locals[:name] = name
+        locals[:data] = data(options[:filters])
+        locals[:div_options] = options[:div_options]
+        locals[:from] = options[:filters][:from]
+        locals[:to] = options[:filters][:to]
+        locals
+      end
+
 
 
       def render_visualisation  options = {}

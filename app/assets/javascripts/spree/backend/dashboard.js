@@ -5,7 +5,7 @@ var Chart = function(data, div_id) {
   this.discreteBarChart = function (rotate, margins) {
     var that = this;
     nv.addGraph(function() {
-      var chart = nv.models.discreteBarChart();
+      var chart = nv.models.discreteBarChart().staggerLabels(true);
       chart.x(function(d) { return d.label });
       chart.y(function(d) { return d.value });
       chart.yAxis.tickFormat(d3.format('d'));

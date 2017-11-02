@@ -14,19 +14,17 @@ module Spree
         "height: 550px;"
       end
 
-      def prepare(options = {})
-        
-        options = {filters: get_fiscal_year, div_options:{id: div_id, style: style}}.merge(options)
-        locals = {}
-        locals[:name] = name
-        locals[:data] = data(options[:filters])
-        locals[:div_options] = options[:div_options]
-        locals[:from] = options[:filters][:from]
-        locals[:to] = options[:filters][:to]
-        locals
-      end
-
       def data(filters={})
+        values = []
+        total = base_order_scope(filters).count
+        cancelled = base_order_scope(filters).where("completed_at is null").count
+
+        if cancelled == 0
+          result = 0
+        else
+          result = (cancelled * 100) / total
+        end
+        values = {result: result, places: places_list}
 
       end
     end

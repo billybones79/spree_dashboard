@@ -19,10 +19,9 @@ module Spree
 
         taxonomies.each do |t|
           top_tax[t.name] = []
-          top_taxons = Spree::Order.
+          top_taxons = base_order_scope(filters)
               joins(:line_items => [{:product => :taxons}]).
               where(payment_state: 'paid').
-              where(completed_at: filters[:begin_date]..filters[:end_date]).
               where(:spree_taxons => {
                         id: Spree::Taxon
                                 .select(:id)
