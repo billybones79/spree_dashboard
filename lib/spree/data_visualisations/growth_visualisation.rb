@@ -26,7 +26,6 @@ module Spree
       end
 
       def calculate_growth(filters = {})
-        byebug
         new_filters = {from: filters[:new_from], to: filters[:new_to], route_code: filters[:route_code]}
         old_filters = {from: filters[:old_from], to: filters[:old_to], route_code: filters[:route_code]}
 
