@@ -8,7 +8,7 @@ module Spree
 
       def prepare(options = { })
 
-        options = {filters: get_fiscal_year}.merge options
+        options = {filters: get_fiscal_year}.deep_merge options
         locals = {}
         locals[:total] =  Spree::Money.new(base_order_scope(options[:filters]).where(payment_state: 'paid').sum(:total))
         locals[:avg_sale] =  Spree::Money.new(base_order_scope(options[:filters]).where(payment_state: 'paid').average(:total))
