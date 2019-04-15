@@ -17,34 +17,3 @@ $('#stats-container h4').click(function(e) {
 
 
 
-//User bar
-
-//Email bar
-var email_data = []
-nv.addGraph(function () {
-  email_data = <%= email_data %>;
-  email_data.map(function (series) {
-    series.values = series.values.map(function (d) {
-      return {x: d[0], y: d[1]}
-    });
-    return series;
-  });
-  var chart = nv.models.historicalBarChart();
-  chart.xAxis
-    .showMaxMin(true)
-    .tickFormat(function(d) {
-      return d3.time.format('%d/%m/%y')(new Date(d))
-    });
-  chart.tooltip.keyFormatter(function(d) {
-      return d3.time.format('%d/%m/%y')(new Date(d))
-    });
-  chart.useInteractiveGuideline(true);
-
-  d3.select("#email-chart svg")
-      .datum(email_data)
-      .transition()
-      .call(chart);
-  nv.utils.windowResize(chart.update);
-
-  return chart;
-});

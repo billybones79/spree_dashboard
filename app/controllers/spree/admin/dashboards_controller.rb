@@ -5,7 +5,6 @@ module Spree
       helper Spree::StatsHelper
 
       def index
-
         begin_date = Time.now.years_ago(1)
         end_date = Time.now
 

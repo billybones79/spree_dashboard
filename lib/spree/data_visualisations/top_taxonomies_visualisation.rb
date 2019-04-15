@@ -19,7 +19,7 @@ module Spree
 
         taxonomies.each do |t|
           top_tax[t.name] = []
-          top_taxons = base_order_scope(filters)
+          top_taxons = base_order_scope(filters).
               joins(:line_items => [{:product => :taxons}]).
               where(payment_state: 'paid').
               where(:spree_taxons => {

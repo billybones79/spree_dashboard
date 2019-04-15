@@ -9,7 +9,7 @@ module Spree
 
       def get_fiscal_year
         today = Date.today
-        
+
         from = Date.new(Date.today.year, 7, 01)
         to = from + 1.year
 
@@ -18,7 +18,7 @@ module Spree
           to = to - 1.year
         end
 
-         {from: from, to: to}
+        {from: from, to: to}
       end
 
       def view_path

@@ -8,81 +8,6 @@
         <%= Spree::DataVisualisations::TotalVisualisation.new().render_visualisation %>
       </div>
     </div>
-    <div class="row left-stats">
-      <div class="col-md-12 col-xs-4">
-          <h4><%= t('index.this_week') %></h4>
-          <div class="values">
-            <p><%= t('index.total') %>:<br/> <span class="amount"><%= Spree::Money.new(total_sales_period Time.now.beginning_of_week) %></span></p>
-            <p><%= t('index.avg_sale') %>:<br/> <span class="amount"><%= Spree::Money.new(average_sales_period Time.now.beginning_of_week) %></span></p>
-          </div>
-      </div>
-      <div class="col-md-12 col-xs-4">
-          <h4><%= t('index.this_month') %></h4>
-          <div class="values">
-            <p><%= t('index.total') %>:<br/> <span class="amount"><%= Spree::Money.new(total_sales_period Time.now.beginning_of_month) %></span></p>
-            <p><%= t('index.avg_sale') %>:<br/> <span class="amount"><%= Spree::Money.new(average_sales_period Time.now.beginning_of_month) %></span></p>
-          </div>
-      </div>
-      <div class="col-md-12 col-xs-4">
-          <h4><%= t('index.last_3_month') %></h4>
-          <div class="values">
-            <p><%= t('index.total') %>:<br/> <span class="amount"><%= Spree::Money.new(total_sales_period 3.month.ago.beginning_of_day) %></span></p>
-            <p><%= t('index.avg_sale') %>:<br/> <span class="amount"><%= Spree::Money.new(average_sales_period 3.month.ago.beginning_of_day) %></span></p>
-          </div>
-      </div>
-      <div class="col-md-12 col-xs-4">
-          <h4><%= t('index.this_year') %></h4>
-          <div class="values">
-            <p><%= t('index.total') %>:<br/> <span class="amount"><%= Spree::Money.new(total_sales_period) %></span></p>
-            <p><%= t('index.avg_sale') %>:<br/> <span class="amount"><%= Spree::Money.new(average_sales_period) %></span></p>
-          </div>
-      </div>
-      <div class="col-md-12 col-xs-8">
-          <h4><%= t('index.avg_sale') %></h4>
-          <div class="values"><p class="amount"><%= Spree::Money.new(average_sales_period Time.at(0)) %></p></div>
-          <h4><%= t('index.avg_sale_month') %></h4>
-          <div class="values"><p class="amount"><%= number_with_precision average_num_period, precision: 2 %>ventes</p> </div>
-          <h4><%= t('index.avg_sale_day') %></h4>
-          <div class="values"><p class="amount"><%= number_with_precision average_num_period('doy'), precision: 2 %> ventes</p></div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="col-sm-2">
-      <div class="sale-swatch">
-        <h3><%= t('index.sales_today') %></h3>
-        <div class="cash-money"><%= Spree::Money.new(total_sales_period Time.now.beginning_of_day) %></div>
-      </div>
-    </div>
-
-    <div class="col-sm-2">
-      <div class="sale-swatch">
-        <h3><%= t('index.sales_yesterday') %></h3>
-        <div class="cash-money"><%= Spree::Money.new(total_sales_period 1.day.ago.beginning_of_day, Time.now.beginning_of_day) %></div>
-      </div>
-    </div>
-
-    <div class="col-sm-2">
-      <div class="sale-swatch">
-        <h3><%= t('index.sales_last_week') %></h3>
-        <div class="cash-money">
-          <%= Spree::Money.new(total_sales_period 1.week.ago.beginning_of_week, Time.now.beginning_of_week)%></div>
-      </div>
-    </div>
-
-    <div class="col-md-2 col-sm-3">
-      <div class="sale-swatch">
-        <h3><%= t('index.sales_last_month') %></h3>
-        <div class="cash-money"><%= Spree::Money.new(total_sales_period 1.month.ago.beginning_of_month, Time.now.beginning_of_month) %></div>
-      </div>
-    </div>
-
-    <div class="col-md-2 col-sm-3">
-      <div class="sale-swatch">
-        <h3><%= t('index.sales_year') %></h3>
-        <div class="cash-money"><%= Spree::Money.new(total_sales_period) %></div>
-      </div>
-    </div>
 
   </div>
 
@@ -101,11 +26,6 @@
       <div class="col-md-4">
         <%= Spree::DataVisualisations::TopTaxonomiesVisualisation.new().render_visualisation %>
       </div>
-
-    <div class="col-md-6 clear">
-      <%= Spree::DataVisualisations::UserDataVisualisation.new().render_visualisation %>
-
-    </div>
     <!--div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -121,5 +41,5 @@
   </div>
 </div>
 <script type="text/javascript" charset="utf-8">
-<%= render partial: 'spree/admin/dashboards/graphs.js' %>
+<%= render partial: 'spree/admin/dashboards/graphs.js',  formats: [:js]  %>
 </script>
