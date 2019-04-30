@@ -38,4 +38,8 @@ en:
     october: October
     november: November
     december: December
+  spree:
+    admin:
+      tab:
+        Dashboard: Dashboard
 
